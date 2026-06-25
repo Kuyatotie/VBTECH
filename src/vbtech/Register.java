@@ -312,13 +312,21 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void CreatebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreatebtnActionPerformed
-   try {
+   
+        
+       
+        
+        
+        
+        
+        try {
 
         String firstname = cFirstName.getText().trim();
         String lastname = cLastName.getText().trim();
         String username = cUserName.getText().trim();
         String password = String.valueOf(cPassword.getPassword());
         String email = cEmail.getText().trim();
+         String contact = cContact.getText().trim();
         String role = cRole.getSelectedItem().toString();
 
         if (firstname.isEmpty() || lastname.isEmpty()
@@ -334,11 +342,15 @@ public class Register extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,
                     "Database connection failed!");
             return;
-        }
+            
+         
+            
+        }  
+        
 
         String sql = "INSERT INTO users "
-                + "(firstname, lastname, username, password, role, email) "
-                + "VALUES (?, ?, ?, ?, ?, ?)";
+                + "(firstname, lastname, username, password, role, email, contact) "
+                + "VALUES (?, ?, ?, ?, ?, ?,?)";
 
         PreparedStatement pst = con.prepareStatement(sql);
 
@@ -347,8 +359,10 @@ public class Register extends javax.swing.JFrame {
         pst.setString(3, username);
         pst.setString(4, password);
         pst.setString(5, role);
+       
         pst.setString(6, email);
-
+        pst.setString(7, contact);
+          AddTable(firstname, lastname, contact, email, role);
         int result = pst.executeUpdate();
 
         if (result > 0) {
@@ -363,6 +377,7 @@ public class Register extends javax.swing.JFrame {
             cEmail.setText("");
             cRole.setSelectedIndex(0);
 
+            
         }
 
         pst.close();
