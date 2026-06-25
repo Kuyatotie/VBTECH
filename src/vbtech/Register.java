@@ -4,71 +4,50 @@
  */
 package vbtech;
 
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author user
  */
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.DecimalFormat;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.table.DefaultTableModel;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+
 public class Register extends javax.swing.JFrame {
 
     /**
      * Creates new form ChartAdminPanel
      */
+    private Connection con;
     public Register() {
         initComponents();
-         connect();
+     connect();
           idname.setText("email");
+          
     }
      public void setUserName(String username) {
     idname.setText(username);
     
      }
-    Connection con;
-    Statement st;
-    PreparedStatement pst;
-    private static final String DBname = "login_db";
-    private static final String DBDriver = "com.mysql.cj.jdbc.Driver";
-    private static final String DBurl = "jdbc:mysql://localhost:3306/" + DBname;
-    private static final String DBusername = "root";
-    private static final String DBpassword = "";
-
-    public final void connect() {
+     
+        private void connect() {
         try {
-            Class.forName(DBDriver);
+            String url = "jdbc:mysql://localhost:3307/account";
+            String user = "root";
+            String password = "112302";
 
-            con = DriverManager.getConnection(
-                    DBurl,
-                    DBusername,
-                    DBpassword
-            );
+            con = DriverManager.getConnection(url, user, password);
 
-            st = con.createStatement();
-
-            if (con != null) {
-                System.out.println("Database Connected Successfully!");
-            }
-
-        } catch (ClassNotFoundException | SQLException ex) {
-            
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    }
-
-    public Connection getConnection() {
-        return con;
-    }
+        }
+    
     
     public void AddTable(String FIRSTNAME,String LASTNAME , String CONTACT, String EMAIL, String ROLE) {
         DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
@@ -124,7 +103,7 @@ public class Register extends javax.swing.JFrame {
         cContact = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        cEmail = new javax.swing.JTextField();
+        cUserName = new javax.swing.JTextField();
         cPassword = new javax.swing.JPasswordField();
         cRole = new javax.swing.JComboBox<>();
         Createbtn = new javax.swing.JButton();
@@ -132,6 +111,8 @@ public class Register extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        cEmail = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -230,9 +211,21 @@ public class Register extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setText("EMAIL");
-        jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, -1, 30));
-        jPanel4.add(cEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, 120, -1));
-        jPanel4.add(cPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 50, 120, -1));
+        jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 50, -1, 30));
+
+        cUserName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cUserNameActionPerformed(evt);
+            }
+        });
+        jPanel4.add(cUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 50, 120, -1));
+
+        cPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cPasswordActionPerformed(evt);
+            }
+        });
+        jPanel4.add(cPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 50, 120, -1));
 
         cRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Staff" }));
         jPanel4.add(cRole, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, -1, -1));
@@ -253,11 +246,22 @@ public class Register extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setText("PASSWORD");
-        jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 50, -1, 30));
+        jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 50, -1, 30));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel8.setText("ROLE");
         jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 10, -1, -1));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel9.setText("USERNAME");
+        jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 50, -1, 30));
+
+        cEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cEmailActionPerformed(evt);
+            }
+        });
+        jPanel4.add(cEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, 120, -1));
 
         jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 150));
 
@@ -308,53 +312,80 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void CreatebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreatebtnActionPerformed
-        String fn = cFirstName.getText().trim();
-        String ln = cLastName.getText().trim();
-        String cn = cContact.getText().trim();
-        String cp = cPassword.getText().trim();
-        String ce = cEmail.getText().trim();
-        String r = cRole.getSelectedItem().toString();
+   try {
 
-        if (fn.isEmpty() || ln.isEmpty() || cn.isEmpty()
-            || cp.isEmpty() || ce.isEmpty()) {
+        String firstname = cFirstName.getText().trim();
+        String lastname = cLastName.getText().trim();
+        String username = cUserName.getText().trim();
+        String password = String.valueOf(cPassword.getPassword());
+        String email = cEmail.getText().trim();
+        String role = cRole.getSelectedItem().toString();
+
+        if (firstname.isEmpty() || lastname.isEmpty()
+                || username.isEmpty() || password.isEmpty()
+                || email.isEmpty()) {
 
             JOptionPane.showMessageDialog(this,
-                "ALL FIELDS ARE REQUIRED");
+                    "Please fill all fields!");
             return;
         }
 
-        try {
-
-            String sql = "INSERT INTO user "
-            + "(FirstName, LastName, Contact, Password, Email, Role) "
-            + "VALUES (?, ?, ?, ?, ?, ?)";
-
-            pst = con.prepareStatement(sql);
-
-            pst.setString(1, fn);
-            pst.setString(2, ln);
-            pst.setString(3, cn);
-            pst.setString(4, cp);
-            pst.setString(5, ce);
-            pst.setString(6, r);
-
-            pst.executeUpdate();
-
-            AddTable(fn, ln, cn, ce, r);
-
+        if (con == null) {
             JOptionPane.showMessageDialog(this,
-                "User Registered Successfully!");
-
-        } catch (SQLException ex) {
-
-            Logger.getLogger(Register.class.getName())
-            .log(Level.SEVERE, null, ex);
-
-            JOptionPane.showMessageDialog(this,
-                ex.getMessage());
+                    "Database connection failed!");
+            return;
         }
 
+        String sql = "INSERT INTO users "
+                + "(firstname, lastname, username, password, role, email) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
+
+        PreparedStatement pst = con.prepareStatement(sql);
+
+        pst.setString(1, firstname);
+        pst.setString(2, lastname);
+        pst.setString(3, username);
+        pst.setString(4, password);
+        pst.setString(5, role);
+        pst.setString(6, email);
+
+        int result = pst.executeUpdate();
+
+        if (result > 0) {
+
+            JOptionPane.showMessageDialog(this,
+                    "Account Created Successfully!");
+
+            cFirstName.setText("");
+            cLastName.setText("");
+            cUserName.setText("");
+            cPassword.setText("");
+            cEmail.setText("");
+            cRole.setSelectedIndex(0);
+
+        }
+
+        pst.close();
+
+    } catch (SQLException ex) {
+
+        JOptionPane.showMessageDialog(this,
+                "Error: " + ex.getMessage());
+
+    }
     }//GEN-LAST:event_CreatebtnActionPerformed
+
+    private void cPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cPasswordActionPerformed
+
+    private void cUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cUserNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cUserNameActionPerformed
+
+    private void cEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cEmailActionPerformed
 
     /**
      * @param args the command line arguments
@@ -406,6 +437,7 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JTextField cLastName;
     private javax.swing.JPasswordField cPassword;
     private javax.swing.JComboBox<String> cRole;
+    private javax.swing.JTextField cUserName;
     private javax.swing.JLabel idname;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -417,6 +449,7 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

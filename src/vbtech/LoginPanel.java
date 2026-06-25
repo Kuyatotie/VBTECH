@@ -9,10 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author user
@@ -22,41 +19,26 @@ public class LoginPanel extends javax.swing.JFrame {
     /**
      * Creates new form AccountPanel
      */
+      private Connection con;
     public LoginPanel() {
         initComponents();
           connect();
           
     }
+  
     
-     
-    Connection con;
-PreparedStatement pst;
-
-private static final String DBname = "login_db";
-private static final String DBDriver = "com.mysql.cj.jdbc.Driver";
-private static final String DBurl = "jdbc:mysql://localhost:3306/" + DBname;
-private static final String DBusername = "root";
-private static final String DBpassword = "";
-
-
-public final void connect() {
+    private void connect() {
     try {
-
-        Class.forName(DBDriver);
-
-        con = DriverManager.getConnection(
-                DBurl,
-                DBusername,
-                DBpassword);
-
-        System.out.println("Database Connected!");
-
-    } catch (ClassNotFoundException | SQLException ex) {
-
-        JOptionPane.showMessageDialog(this,
-                "Connection Failed!\n" + ex.getMessage());
+        con = (Connection) DriverManager.getConnection(
+                "jdbc:mysql://localhost:3307/account",
+                "root",
+                "112302");
+    } catch (Exception e) {
+        e.printStackTrace();
     }
 }
+     
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,7 +52,7 @@ public final void connect() {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        cEmail = new javax.swing.JTextField();
+        cUserName = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         cPassword = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
@@ -102,12 +84,12 @@ public final void connect() {
         jPanel3.setBackground(new java.awt.Color(51, 51, 51));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cEmail.addActionListener(new java.awt.event.ActionListener() {
+        cUserName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cEmailActionPerformed(evt);
+                cUserNameActionPerformed(evt);
             }
         });
-        jPanel3.add(cEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 150, 30));
+        jPanel3.add(cUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 150, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/User.png"))); // NOI18N
         jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, 60, -1));
@@ -150,9 +132,9 @@ public final void connect() {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cEmailActionPerformed
+    private void cUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cUserNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cEmailActionPerformed
+    }//GEN-LAST:event_cUserNameActionPerformed
 
     private void cRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cRoleActionPerformed
         // TODO add your handling code here:
@@ -163,22 +145,23 @@ public final void connect() {
     }//GEN-LAST:event_cPasswordActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         String email = cEmail.getText().trim();
+   String username = cUserName.getText().trim();
 String password = String.valueOf(cPassword.getPassword());
 String role = cRole.getSelectedItem().toString();
 
-if (email.isEmpty() || password.isEmpty()) {
+if (username.isEmpty() || password.isEmpty()) {
     JOptionPane.showMessageDialog(this,
-            "Please enter Email and Password!");
+            "Please enter Username and Password!");
     return;
 }
 
 try {
 
-    String sql = "SELECT * FROM user WHERE Email=? AND Password=? AND Role=?";
+    String sql = "SELECT * FROM users WHERE username=? AND password=? AND role=?";
 
-    pst = con.prepareStatement(sql);
-    pst.setString(1, email);
+    PreparedStatement pst = con.prepareStatement(sql);
+
+    pst.setString(1, username);
     pst.setString(2, password);
     pst.setString(3, role);
 
@@ -189,36 +172,33 @@ try {
         JOptionPane.showMessageDialog(this,
                 "Login Successful!");
 
-        // FIXED: use STRING role, not JComboBox
         if (role.equalsIgnoreCase("Admin")) {
 
-            AdminPanel admin = new AdminPanel();
-          admin.setUserName(email);
+            Register admin = new Register();
             admin.setVisible(true);
-            
 
         } else if (role.equalsIgnoreCase("Staff")) {
 
             Staff staff = new Staff();
-            staff.setUserName(email);
             staff.setVisible(true);
+
         }
 
-        this.dispose();
+        dispose();
 
     } else {
 
         JOptionPane.showMessageDialog(this,
-                "Invalid Email, Password, or Role!");
+                "Invalid Username, Password, or Role!");
     }
+
+    rs.close();
+    pst.close();
 
 } catch (SQLException ex) {
 
-    Logger.getLogger(LoginPanel.class.getName())
-            .log(Level.SEVERE, null, ex);
-
     JOptionPane.showMessageDialog(this,
-            ex.getMessage());
+            "Error: " + ex.getMessage());
 }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -261,9 +241,9 @@ try {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField cEmail;
     private javax.swing.JPasswordField cPassword;
     private javax.swing.JComboBox<String> cRole;
+    private javax.swing.JTextField cUserName;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
