@@ -8,15 +8,20 @@ package vbtech;
  *
  * @author user
  */
-public class ChartAdminPanel extends javax.swing.JFrame {
+public class AdminPanel extends javax.swing.JFrame {
 
     /**
      * Creates new form ChartAdminPanel
      */
-    public ChartAdminPanel() {
+    public AdminPanel() {
         initComponents();
+         idname.setText("email");
     }
 
+    
+    public void setUserName(String username) {
+    idname.setText(username);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,7 +32,7 @@ public class ChartAdminPanel extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        idname = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
@@ -36,10 +41,6 @@ public class ChartAdminPanel extends javax.swing.JFrame {
         AccountBtn = new javax.swing.JButton();
         StockBtn = new javax.swing.JButton();
         jTextArea1 = new javax.swing.JTextArea();
-        TOAL = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -47,10 +48,9 @@ public class ChartAdminPanel extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/User.png"))); // NOI18N
-        jLabel1.setText("ADMIN");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 180, -1));
+        idname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        idname.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/User.png"))); // NOI18N
+        jPanel2.add(idname, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 180, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -66,16 +66,31 @@ public class ChartAdminPanel extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(102, 153, 255));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/close.png"))); // NOI18N
         jButton2.setText("LOGOUT");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 180, 70));
 
-        MonitoringBtn.setBackground(new java.awt.Color(204, 0, 51));
+        MonitoringBtn.setBackground(new java.awt.Color(255, 51, 51));
         MonitoringBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/chart.png"))); // NOI18N
         MonitoringBtn.setText("MONITORING");
+        MonitoringBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MonitoringBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(MonitoringBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 70));
 
         ReportBtn.setBackground(new java.awt.Color(102, 153, 255));
         ReportBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Report.png"))); // NOI18N
         ReportBtn.setText("REPORT");
+        ReportBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReportBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(ReportBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 180, 70));
 
         AccountBtn.setBackground(new java.awt.Color(102, 153, 255));
@@ -99,77 +114,30 @@ public class ChartAdminPanel extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         getContentPane().add(jTextArea1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        TOAL.setText("TOTAL:");
-        TOAL.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TOALActionPerformed(evt);
-            }
-        });
-        getContentPane().add(TOAL, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 490, 60, -1));
-
-        jScrollPane2.setBackground(new java.awt.Color(102, 102, 102));
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 490, 110, 20));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "PRODUCT", "PRICE"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Integer.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-        }
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, -1, -1));
-
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void AccountBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AccountBtnActionPerformed
-      AccountPanel AP = new AccountPanel();
-      AP.setVisible(true);
+      Register r = new Register();
+
+      r.setVisible(true);
       dispose();
     }//GEN-LAST:event_AccountBtnActionPerformed
 
-    private void TOALActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TOALActionPerformed
+    private void MonitoringBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MonitoringBtnActionPerformed
+        
+    }//GEN-LAST:event_MonitoringBtnActionPerformed
+
+    private void ReportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReportBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TOALActionPerformed
+    }//GEN-LAST:event_ReportBtnActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+      LoginPanel lp = new LoginPanel();
+      lp.setVisible(true);
+      dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,20 +156,21 @@ public class ChartAdminPanel extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ChartAdminPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ChartAdminPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ChartAdminPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ChartAdminPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ChartAdminPanel().setVisible(true);
+                new AdminPanel().setVisible(true);
             }
         });
     }
@@ -211,15 +180,11 @@ public class ChartAdminPanel extends javax.swing.JFrame {
     private javax.swing.JButton MonitoringBtn;
     private javax.swing.JButton ReportBtn;
     private javax.swing.JButton StockBtn;
-    private javax.swing.JTextField TOAL;
+    private javax.swing.JLabel idname;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }
