@@ -1,4 +1,4 @@
-package vbtech;
+package vbtech.exe;
 import java.sql.Connection;
 import java.sql.DriverManager;
 

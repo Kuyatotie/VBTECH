@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package vbtech;
+package vbtech.exe;
 
 
 import java.sql.Connection;
@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.sql.ResultSet;
 /**
  *
  * @author user
@@ -27,13 +28,11 @@ public class Register extends javax.swing.JFrame {
     public Register() {
         initComponents();
      connect();
-          idname.setText("email");
-          
+         
     }
-     public void setUserName(String username) {
-    idname.setText(username);
     
-     }
+ 
+
      
         private void connect() {
         try {
@@ -72,7 +71,32 @@ public class Register extends javax.swing.JFrame {
     }
     
     
-    
+    public void loadTable() {
+    try {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Clear existing rows
+
+        String sql = "SELECT firstname, lastname, contact, email, role FROM users";
+        PreparedStatement pst = con.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getString("firstname"),
+                rs.getString("lastname"),
+                rs.getInt("contact"),
+                rs.getString("email"),
+                rs.getString("role")
+            });
+        }
+
+        rs.close();
+        pst.close();
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+}
    
 
     /**
@@ -85,7 +109,6 @@ public class Register extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        idname = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
@@ -122,11 +145,6 @@ public class Register extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        idname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        idname.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/User.png"))); // NOI18N
-        idname.setText("ADMIN");
-        jPanel2.add(idname, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 180, -1));
-
         jLabel2.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("CREATE ACCOUNT");
@@ -139,7 +157,6 @@ public class Register extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton2.setBackground(new java.awt.Color(102, 153, 255));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/close.png"))); // NOI18N
         jButton2.setText("LOGOUT");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,7 +166,6 @@ public class Register extends javax.swing.JFrame {
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 180, 70));
 
         MonitoringBtn.setBackground(new java.awt.Color(102, 153, 255));
-        MonitoringBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/chart.png"))); // NOI18N
         MonitoringBtn.setText("MONITORING");
         MonitoringBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,7 +175,6 @@ public class Register extends javax.swing.JFrame {
         jPanel1.add(MonitoringBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 180, 70));
 
         ReportBtn.setBackground(new java.awt.Color(102, 153, 255));
-        ReportBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Report.png"))); // NOI18N
         ReportBtn.setText("REPORT");
         ReportBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,7 +184,6 @@ public class Register extends javax.swing.JFrame {
         jPanel1.add(ReportBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 180, 70));
 
         AccountBtn.setBackground(new java.awt.Color(255, 51, 51));
-        AccountBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/addUSer.png"))); // NOI18N
         AccountBtn.setText("Create Staff ACCOUNT");
         AccountBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,7 +193,6 @@ public class Register extends javax.swing.JFrame {
         jPanel1.add(AccountBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 70));
 
         StockBtn.setBackground(new java.awt.Color(102, 153, 255));
-        StockBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cart.png"))); // NOI18N
         StockBtn.setText("STOCK");
         jPanel1.add(StockBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 180, 70));
 
@@ -191,25 +204,35 @@ public class Register extends javax.swing.JFrame {
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel4.setBackground(new java.awt.Color(102, 153, 255));
+        jPanel4.setBackground(new java.awt.Color(0, 153, 153));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("FIRSTNAME");
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, -1, 40));
         jPanel4.add(cFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 140, -1));
         jPanel4.add(cLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 140, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("LASTNAME");
         jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 70, 20));
+
+        cContact.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cContactActionPerformed(evt);
+            }
+        });
         jPanel4.add(cContact, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 10, 120, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("CONTACT");
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, -1, 20));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("EMAIL");
         jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 50, -1, 30));
 
@@ -239,20 +262,33 @@ public class Register extends javax.swing.JFrame {
         jPanel4.add(Createbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 100, -1, -1));
 
         jButton3.setText("UPDATE");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel4.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, -1, -1));
 
         jButton1.setText("DELETE");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 100, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("PASSWORD");
         jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 50, -1, 30));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("ROLE");
         jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 10, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("USERNAME");
         jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 50, -1, 30));
 
@@ -279,6 +315,11 @@ public class Register extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -312,13 +353,7 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void CreatebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreatebtnActionPerformed
-   
-        
        
-        
-        
-        
-        
         try {
 
         String firstname = cFirstName.getText().trim();
@@ -362,8 +397,9 @@ public class Register extends javax.swing.JFrame {
        
         pst.setString(6, email);
         pst.setString(7, contact);
-          AddTable(firstname, lastname, contact, email, role);
+        
         int result = pst.executeUpdate();
+         loadTable();
 
         if (result > 0) {
 
@@ -375,6 +411,7 @@ public class Register extends javax.swing.JFrame {
             cUserName.setText("");
             cPassword.setText("");
             cEmail.setText("");
+            cContact.setText("");
             cRole.setSelectedIndex(0);
 
             
@@ -388,6 +425,7 @@ public class Register extends javax.swing.JFrame {
                 "Error: " + ex.getMessage());
 
     }
+        
     }//GEN-LAST:event_CreatebtnActionPerformed
 
     private void cPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cPasswordActionPerformed
@@ -401,6 +439,79 @@ public class Register extends javax.swing.JFrame {
     private void cEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cEmailActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    
+    
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+     
+    int row = jTable1.getSelectedRow();
+
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a user to delete.");
+        return;
+    }
+
+    int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to delete this account?",
+            "Confirm Delete",
+            JOptionPane.YES_NO_OPTION);
+
+    if (confirm != JOptionPane.YES_OPTION) {
+        return;
+    }
+
+    try {
+
+        String firstname = jTable1.getValueAt(row, 0).toString();
+        String lastname = jTable1.getValueAt(row, 1).toString();
+        String email = jTable1.getValueAt(row, 3).toString();
+
+        String sql = "DELETE FROM users WHERE firstname=? AND lastname=? AND email=?";
+
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setString(1, firstname);
+        pst.setString(2, lastname);
+        pst.setString(3, email);
+
+        int result = pst.executeUpdate();
+
+        if (result > 0) {
+
+            JOptionPane.showMessageDialog(this, "Account deleted successfully.");
+
+            loadTable();
+
+            cFirstName.setText("");
+            cLastName.setText("");
+            cContact.setText("");
+            cEmail.setText("");
+            cUserName.setText("");
+            cPassword.setText("");
+            cRole.setSelectedIndex(0);
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Account not found.");
+        }
+
+        pst.close();
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage());
+    }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void cContactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cContactActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cContactActionPerformed
 
     /**
      * @param args the command line arguments
@@ -431,6 +542,18 @@ public class Register extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -453,7 +576,6 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JPasswordField cPassword;
     private javax.swing.JComboBox<String> cRole;
     private javax.swing.JTextField cUserName;
-    private javax.swing.JLabel idname;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

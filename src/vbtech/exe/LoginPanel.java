@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package vbtech;
+package vbtech.exe;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -53,7 +53,6 @@ public class LoginPanel extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         cUserName = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
         cPassword = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -61,6 +60,7 @@ public class LoginPanel extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
@@ -90,9 +90,6 @@ public class LoginPanel extends javax.swing.JFrame {
             }
         });
         jPanel3.add(cUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 150, 30));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/User.png"))); // NOI18N
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, 60, -1));
 
         cPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,6 +127,7 @@ public class LoginPanel extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 600));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cUserNameActionPerformed
@@ -174,7 +172,7 @@ try {
 
         if (role.equalsIgnoreCase("Admin")) {
 
-            Register admin = new Register();
+            AdminPanel admin = new AdminPanel();
             admin.setVisible(true);
 
         } else if (role.equalsIgnoreCase("Staff")) {
@@ -245,7 +243,6 @@ try {
     private javax.swing.JComboBox<String> cRole;
     private javax.swing.JTextField cUserName;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
